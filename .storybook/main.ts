@@ -10,14 +10,14 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
-    "@storybook/addon-themes"
+    "@storybook/addon-themes",
   ],
   framework: {
     name: "@storybook/nextjs",
     options: {},
   },
   typescript: {
-    reactDocgen: 'react-docgen-typescript'
+    reactDocgen: "react-docgen-typescript",
   },
   staticDirs: ["../public"],
 };

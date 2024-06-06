@@ -7,7 +7,7 @@
 }
 
 .dark {
-    --background: 0, 64, 0;
+  --background: 0, 64, 0;
 }
 
 body {
@@ -15,5 +15,5 @@ body {
 }
 
 #storybook-root {
-    padding: 2px;
+  padding: 2px;
 }
