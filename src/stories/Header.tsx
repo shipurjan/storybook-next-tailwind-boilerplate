@@ -1,29 +1,41 @@
-import React from "react";
+import { VariantProps, cva } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { HTMLAttributes, forwardRef } from "react";
 import { Button } from "./Button";
 
-type User = {
-  name: string;
-};
-
-interface HeaderProps {
-  user?: User;
+type Props = HTMLAttributes<RefType> & {
+  variants?: VariantProps<typeof Variants>;
+  user?: { name: string };
   onLogin?: () => void;
   onLogout?: () => void;
   onCreateAccount?: () => void;
-}
+  onDeleteAccount?: () => void;
+};
 
-export const Header = ({
-  user,
-  onLogin,
-  onLogout,
-  onCreateAccount,
-}: HeaderProps) => (
-  <header>
-    <div className="storybook-header">
-      <div>
+type RefType = HTMLDivElement;
+const Component = forwardRef<RefType, Props>(
+  (
+    {
+      variants,
+      className,
+      user,
+      onLogin,
+      onLogout,
+      onCreateAccount,
+      onDeleteAccount,
+      ...props
+    },
+    ref,
+  ) => (
+    <div
+      ref={ref}
+      {...props}
+      className={cn(Variants({ ...variants, className }))}
+    >
+      <div className="flex flex-col justify-center items-center pl-8 gap-2">
         <svg
-          width="32"
-          height="32"
+          width="48"
+          height="48"
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -42,29 +54,53 @@ export const Header = ({
             />
           </g>
         </svg>
-        <h1>Acme</h1>
+        <h1 className="font-bold">Acme</h1>
       </div>
       <div>
         {user ? (
-          <>
-            <span className="welcome">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button size="small" onClick={onLogout}>
-              Log out
-            </Button>
-          </>
+          <div className="flex flex-col justify-center items-center gap-3">
+            <div>
+              <span className="welcome">
+                Welcome, <b>{user.name}</b>!
+              </span>
+            </div>
+            <div className="flex gap-1">
+              <Button variants={{ size: "sm" }} onClick={onLogout}>
+                Log out
+              </Button>
+              <Button
+                variants={{ size: "sm", theme: "dangerous" }}
+                onClick={onDeleteAccount}
+              >
+                Delete account
+              </Button>
+            </div>
+          </div>
         ) : (
-          <>
-            <Button size="small" onClick={onLogin}>
+          <div className="flex gap-1">
+            <Button variants={{ size: "sm" }} onClick={onLogin}>
               Log in
             </Button>
-            <Button size="small" onClick={onCreateAccount}>
+            <Button variants={{ size: "sm" }} onClick={onCreateAccount}>
               Sign up
             </Button>
-          </>
+          </div>
         )}
       </div>
     </div>
-  </header>
+  ),
+);
+
+// Change component name and export names here
+Component.displayName = "Header";
+export { Component as Header, Variants as HeaderVariants };
+export type { Props as HeaderProps };
+//
+
+const Variants = cva(
+  "flex items-center justify-between p-4 bg-gradient-to-b from-indigo-500 to-indigo-600 text-white w-full h-32",
+  {
+    variants: {},
+    defaultVariants: {},
+  },
 );
