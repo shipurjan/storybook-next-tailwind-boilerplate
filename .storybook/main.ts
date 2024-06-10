@@ -1,6 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 
-// @ts-expect-error - wrong typings in config.typescript
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
@@ -15,9 +14,6 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/nextjs",
     options: {},
-  },
-  typescript: {
-    reactDocgen: "react-docgen-typescript",
   },
   staticDirs: ["../public"],
 };
