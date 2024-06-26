@@ -1,12 +1,24 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { getNamedObjects, cn } from "@/lib/utils";
 import { HTMLAttributes, forwardRef } from "react";
 
+/// ********************************************
+// TypeScript will ensure that export names at the bottom of the file are correct.
+// So you can just copy and paste this file and reuse it,
+// creating a new component, and have type-safe export names.
+//
+// The exports will be named after these values:
+// Declare component name here
+const COMPONENT_NAME = "Button";
+// Declare props name here
+export type ButtonProps = Props;
+/// ********************************************
+
+type RefType = HTMLButtonElement;
 type Props = HTMLAttributes<RefType> & {
   variants?: VariantProps<typeof Variants>;
 };
 
-type RefType = HTMLButtonElement;
 const Component = forwardRef<RefType, Props>(
   ({ variants, className, ...props }, ref) => (
     <button
@@ -16,12 +28,6 @@ const Component = forwardRef<RefType, Props>(
     />
   ),
 );
-
-// Change component name and export names here
-Component.displayName = "Button";
-export { Component as Button, Variants as ButtonVariants };
-export type { Props as ButtonProps };
-//
 
 const Variants = cva(
   "inline-flex items-center justify-center rounded-md font-medium cursor-pointer border bg-gradient-to-b",
@@ -45,3 +51,9 @@ const Variants = cva(
     },
   },
 );
+
+Component.displayName = COMPONENT_NAME;
+export const { Button, ButtonVariants } = getNamedObjects(COMPONENT_NAME, {
+  Component,
+  Variants,
+});
